@@ -38,11 +38,32 @@
                     </ul>
                 </div>
 
-            </form>          
+            </form>
+            
+            <!-- Modal for city search error handling -->
+            <div class="modal fade" id="cityErrorModal" tabindex="-1" role="dialog">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Error</h5>
+                    </div>
+                    <div class="modal-body">
+                        <p>You've entered an invalid city name.</p>
+                        <p>To be more precise enter the city name, comma, 2-letter country code. <i>Example: London, UK or New York, US.</i></p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+                </div>
+            </div>
+
+
+
             <div class="col-9">
                 <div class="row border mx-2">
                     <div class="col my-3">
-                        <h3 class="my-2"><span id="cityName"></span> <span id="currentDate"></span></h3>
+                        <h3 class="my-2"><span id="cityName">Enter a City</span> <span id="currentDate"></span> <img id="currentWeatherIcon" src="http://openweathermap.org/img/wn/02d@2x.png"></h3>
                         <br>
                         <p>Temperature: <span id="currentTemp"></span></p>
                         <p>Humidity: <span id="currentHumidity"></span></p>
@@ -59,9 +80,9 @@
                         <div class="bg-primary card col m-2 text-white">
                             <div class="my-3">
                                 <h5 class="mb-3" id="currentDatePlus1">12/12/2020</h5>
-                                <p class="card-text">Icon </p>
-                                <p class="card-text">Temp: </p>
-                                <p class="card-text">Humidity: </p>
+                                <p class="card-text"><img id="plusOneIcon" src="http://openweathermap.org/img/wn/02d@2x.png" width="60"></p>
+                                <p class="card-text">Temp: <span id="plusOneTemp"></span></p>
+                                <p class="card-text">Humidity: <span id="plusOneHumidity"></span></p>
                             </div>
                         </div>
                     
@@ -111,6 +132,7 @@
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <script src="https://momentjs.com/downloads/moment.min.js"></script>
     <script src="./assets/script.js"></script>
 
