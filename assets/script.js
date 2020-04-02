@@ -61,18 +61,19 @@ function displayWeather() {
             method: "GET"
         })
         .then(function(response) {
+            
             $("#currentUV").text(response.value);
             
             if (response.value > 8.0) {
                 $("#currentUV").removeClass().addClass("badge badge-danger");
             }
-            if (6.0 <= response.value < 8.0) {
+            else if (6.0 <= response.value && response.value < 8.0) {
                 $("#currentUV").removeClass().addClass("badge badge-warning");
             }
-            if (3.0 <= response.value < 6.0) {
+            else if (3.0 <= response.value && response.value < 6.0) {
                 $("#currentUV").removeClass().addClass("badge badge-warning");
             }
-            if (response.value < 3.0) {
+            else if (response.value < 3.0) {
                 $("#currentUV").removeClass().addClass("badge badge-success");
             };
         });
@@ -91,7 +92,7 @@ function fiveDayForecast() {
         method: "GET"
     })
     .then(function(response) {
-        console.log("5 day");
+        
         console.log(response.list);
     })
 
