@@ -26,7 +26,7 @@
                 </div>
 
                 <div class="card">
-                    <ul class="list-group list-group-flush">
+                    <ul class="list-group list-group-flush" id="citySearchHistory">
                         <button type="button" class="btn btn-outline-secondary searchHistoryBtn">Austin</button>
                         <button type="button" class="btn btn-outline-secondary searchHistoryBtn">Chicago</button>
                         <button type="button" class="btn btn-outline-secondary searchHistoryBtn">New York</button>
@@ -45,11 +45,10 @@
                 <div class="modal-dialog modal-dialog-centered" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h5 class="modal-title">Error</h5>
+                        <h5 class="modal-title">Invalid City</h5>
                     </div>
                     <div class="modal-body">
                         <p>You've entered an invalid city name.</p>
-                        <p>To be more precise enter the city name, comma, 2-letter country code. <i>Example: London, UK or New York, US.</i></p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -75,50 +74,51 @@
                 <div class="row m-2">
                     <h4>5-Day Forecast:</h4>
                 </div>
+
                 <div class="row m-2">
 
-                        <div class="bg-primary card col m-2 text-white">
+                        <div class="bg-primary card col m-2 text-white" id="bootstrap-overrides">
                             <div class="my-3">
                                 <h5 class="mb-3" id="currentDatePlus1">12/12/2020</h5>
-                                <p class="card-text"><img id="plusOneIcon" src="http://openweathermap.org/img/wn/02d@2x.png" width="60"></p>
-                                <p class="card-text">Temp: <span id="plusOneTemp"></span></p>
-                                <p class="card-text">Humidity: <span id="plusOneHumidity"></span></p>
+                                <p class="card-text"><img id="iconPlus1" src="http://openweathermap.org/img/wn/02d@2x.png" width="60"></p>
+                                <p class="card-text">Temp: <span id="tempPlus1"></span></p>
+                                <p class="card-text">Humidity: <span id="humidityPlus1"></span></p>
                             </div>
                         </div>
                     
                         <div class="bg-primary card col m-2 text-white">
                             <div class="my-3">
                                 <h5 class="mb-3" id="currentDatePlus2">12/12/2020</h5>
-                                <p class="card-text">Icon </p>
-                                <p class="card-text">Temp: </p>
-                                <p class="card-text">Humidity: </p>
+                                <p class="card-text"><img id="iconPlus2" src="http://openweathermap.org/img/wn/02d@2x.png" width="60"></p>
+                                <p class="card-text">Temp: <span id="tempPlus2"></span></p>
+                                <p class="card-text">Humidity: <span id="humidityPlus2"></span></p>
                             </div>
                         </div>
                         
                         <div class="bg-primary card col m-2 text-white">
                             <div class="my-3">
                                 <h5 class="mb-3" id="currentDatePlus3">12/12/2020</h5>
-                                <p class="card-text">Icon </p>
-                                <p class="card-text">Temp: </p>
-                                <p class="card-text">Humidity: </p>
+                                <p class="card-text"><img id="iconPlus3" src="http://openweathermap.org/img/wn/02d@2x.png" width="60"></p>
+                                <p class="card-text">Temp: <span id="tempPlus3"></span></p>
+                                <p class="card-text">Humidity: <span id="humidityPlus3"></span></p>
                             </div>
                         </div>
                 
                         <div class="bg-primary card col m-2 text-white">
                             <div class="my-3">
                                 <h5 class="mb-3" id="currentDatePlus4">12/12/2020</h5>
-                                <p class="card-text">Icon </p>
-                                <p class="card-text">Temp: </p>
-                                <p class="card-text">Humidity: </p>
+                                <p class="card-text"><img id="iconPlus4" src="http://openweathermap.org/img/wn/02d@2x.png" width="60"></p>
+                                <p class="card-text">Temp: <span id="tempPlus4"></span></p>
+                                <p class="card-text">Humidity: <span id="humidityPlus4"></span></p>
                             </div>
                         </div>
                         
                         <div class="bg-primary card col m-2 text-white">
                             <div class="my-3">
                                 <h5 class="mb-3" id="currentDatePlus5">12/12/2020</h5>
-                                <p class="card-text">Icon </p>
-                                <p class="card-text">Temp: </p>
-                                <p class="card-text">Humidity: </p>
+                                <p class="card-text"><img id="iconPlus5" src="http://openweathermap.org/img/wn/02d@2x.png" width="60"></p>
+                                <p class="card-text">Temp: <span id="tempPlus5"></span></p>
+                                <p class="card-text">Humidity: <span id="humidityPlus5"></span></p>
                             </div>
                         </div>
                     

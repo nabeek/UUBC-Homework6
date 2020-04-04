@@ -1,6 +1,13 @@
-// Define global variables
+// Set dates throughout the page
 
-let citySearchInput = "";
+$(document).ready(function() {
+
+    $("#currentDate").text(`(${moment().format("l")})`);
+    for (i = 1; i < 6; i++) {
+        var forecastDate = $(`#currentDatePlus${i}`);
+        forecastDate.text(moment().add(`${i}`, "d").format("l"));
+    };
+})
 
 // Collect city input and call API
 
@@ -8,22 +15,26 @@ function citySearch() {
     citySearchInput = $("#citySearchInput").val().trim();
     citySearchInput = citySearchInput.split(" ").join("+");
     displayWeather();
-}
+};
 
-$("#citySearchBtn").click(function() {
+$("#citySearchBtn").click(function() {              // Search when clicking submit button
     event.preventDefault();
+    citySearchInput = $("#citySearchInput").val()
+    if (citySearchInput == "") {
+        return false;
+    }
     citySearch();
 });
 
-$('#citySearchInput').keypress(function (event) {                                       
+$('#citySearchInput').keypress(function (event) {           // Search on pressing 'enter'
     if (event.which == 13) {
-         event.preventDefault();
-         $(this).blur();
-         citySearch();   
+        event.preventDefault();
+        $(this).blur();
+        citySearch();
     };
 });
 
-$(".searchHistoryBtn").click(function () {
+$(".searchHistoryBtn").click(function () {              // Search when selecting a city from the recently-searched list
     event.preventDefault();
     citySearchInput = $(this).text();
     $("#citySearchInput").val(citySearchInput);
@@ -31,25 +42,25 @@ $(".searchHistoryBtn").click(function () {
     displayWeather();
 })
 
-// OpenWeatherMap API function
-
-function tempCalc(tempK) {return Math.round((tempK - 273.15) * 9/5 + 32)}           // Calculate Kelvin to Fahrenheit
+// OpenWeatherMap API function to display current conditions
 
 function displayWeather() {
 
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearchInput + "&appid=4679460f119c185a5abb3222455a221f";
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + citySearchInput + "&appid=4679460f119c185a5abb3222455a221f&units=imperial";
 
     $.ajax ({               // Get weather for current day
         url: queryURL,
-        method: "GET",
-        success: (function(response) {
+        method: "GET"
+        }).then(function(response) {
+
+            addCitySearched();
 
             var weatherIcon = response.weather[0].icon;
             var weatherURL = "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
 
-            $("#cityName").text(response.name + ` (${moment().format("l")})`);
+            $("#cityName").text(response.name);
             $("#currentWeatherIcon").attr("src", weatherURL);
-            $("#currentTemp").text(tempCalc(response.main.temp) + " °F");
+            $("#currentTemp").text(Math.round(response.main.temp) + " °F");
             $("#currentHumidity").text(response.main.humidity + "%");
             $("#currentWindSpeed").text(response.wind.speed + " MPH");
             
@@ -78,40 +89,89 @@ function displayWeather() {
                 else if (response.value < 3.0) {
                     $("#currentUV").removeClass().addClass("badge badge-success");
                 };
+            })
+            .catch(function(error) {
+                // console.log(error);
             });
-        }),
-    });
+        })
+        .catch(function(error) {
+            if (error.status === 404) {
+                $("#cityErrorModal").modal();
+                $("#citySearchInput").val("");
+                removeInvalidCity();
+            };
+        });
     
     fiveDayForecast();
 
 }; 
 
+// OpenWeatherMap API function to display 5-day forecast
+
 function fiveDayForecast() {
 
-    var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearchInput + "&appid=4679460f119c185a5abb3222455a221f";
-
-    $("#currentDatePlus1").text(moment().add(1, "d").format("l"));
-    $("#currentDatePlus2").text(moment().add(2, "d").format("l"));
-    $("#currentDatePlus3").text(moment().add(3, "d").format("l"));
-    $("#currentDatePlus4").text(moment().add(4, "d").format("l"));
-    $("#currentDatePlus5").text(moment().add(5, "d").format("l"));
+    var forecastURL = "https://api.openweathermap.org/data/2.5/forecast?q=" + citySearchInput + "&cnt=6&units=imperial&appid=166a433c57516f51dfab1f7edaed8413";
 
     $.ajax({
         url: forecastURL,
         method: "GET"
     })
-    .then(function(response) {
-        
+    .then(function(response) {   
+
         var response = response.list;
-        console.log(response);
+   
+        for (i = 0; i < response.length; i++) {
 
-        // for (i = 0; i < response.length; i++) {
-        //     if ((moment.unix(response[i].dt).format("l")) == $("#currentDatePlus1").text()) {   
-        //         console.log(response[i].main.temp);
-        //     };
-
-        // };
+            var weatherURL = "http://openweathermap.org/img/wn/" + (response[i].weather[0].icon).slice(0, -1) + "d@2x.png";
+            $(`#iconPlus${i}`).attr("src", weatherURL);
+            $(`#tempPlus${i}`).text(Math.round(response[i].main.temp) + " °F");
+            $(`#humidityPlus${i}`).text(response[i].main.humidity + "%");
+        };
     });
+};
+
+// Save searched city into local storage and display in list under search input
+
+// var citySubmitted = JSON.parse(localStorage.getItem("highScores")) || [];
+
+
+function addCitySearched() {
+    var citySearched = $("#citySearchInput").val();
+    const city = citySearched;
+
+    let cities;
+
+    if (localStorage.getItem("cities") === null) {
+        cities = [];
+    }   else {
+        cities = JSON.parse(localStorage.getItem("cities"));
+    }
+
+    if (cities.includes(city) === false) {
+        cities.push(city);
+    };
+    cities.sort( (a,b) => b.city - a.city);
+    cities.splice(5);
+
+    localStorage.setItem("cities", JSON.stringify(cities));
+
+
+
+
+    
+// //     {
+// //         name: timeLeft,
+// //         name: userInitials.value.toUpperCase()
+// //     };
+// //     highScores.push(score);
+// //     highScores.sort( (a,b) => b.score - a.score)
+// //     highScores.splice(5);
+
+// //     localStorage.setItem("highScores", JSON.stringify(highScores));
+// //     window.location.assign("./index.html");     // return to quiz start after submitting
 
 };
 
+function removeInvalidCity() {
+    localStorage.getItem("cities").pop();
+};
