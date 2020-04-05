@@ -1,3 +1,7 @@
+// Generate recently searched cities on page load
+
+populateList();
+
 // Set dates throughout the page
 
 $(document).ready(function() {
@@ -34,13 +38,16 @@ $('#citySearchInput').keypress(function (event) {           // Search on pressin
     };
 });
 
-$(".searchHistoryBtn").click(function () {              // Search when selecting a city from the recently-searched list
+$("body").delegate(".searchHistoryBtn", "click", function() {              // Search when selecting a city from the recently-searched list
     event.preventDefault();
-    citySearchInput = $(this).text();
-    $("#citySearchInput").val(citySearchInput);
-    citySearchInput = citySearchInput.split(" ").join("+");
-    displayWeather();
-})
+    $("#citySearchInput").val($(this).text());
+    citySearch();
+});
+
+// $("#clearSearchBtn").click(function() {                 // Clear recently searched cities (not currently in use)
+//     localStorage.clear();
+//     window.location.assign("./index.html");
+// });
 
 // OpenWeatherMap API function to display current conditions
 
@@ -52,8 +59,6 @@ function displayWeather() {
         url: queryURL,
         method: "GET"
         }).then(function(response) {
-
-            addCitySearched();
 
             var weatherIcon = response.weather[0].icon;
             var weatherURL = "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
@@ -93,17 +98,17 @@ function displayWeather() {
             .catch(function(error) {
                 // console.log(error);
             });
+        
+        addCitySearched();          // Add successful search input to local storage
+        populateList();             // Add successful search input as clickable list item
         })
         .catch(function(error) {
             if (error.status === 404) {
                 $("#cityErrorModal").modal();
                 $("#citySearchInput").val("");
-                removeInvalidCity();
             };
         });
-    
     fiveDayForecast();
-
 }; 
 
 // OpenWeatherMap API function to display 5-day forecast
@@ -132,9 +137,6 @@ function fiveDayForecast() {
 
 // Save searched city into local storage and display in list under search input
 
-// var citySubmitted = JSON.parse(localStorage.getItem("highScores")) || [];
-
-
 function addCitySearched() {
     var citySearched = $("#citySearchInput").val();
     const city = citySearched;
@@ -149,29 +151,24 @@ function addCitySearched() {
 
     if (cities.includes(city) === false) {
         cities.push(city);
+    }
+
+    if (cities.length > 6) {
+        cities.shift();
     };
-    cities.sort( (a,b) => b.city - a.city);
-    cities.splice(5);
 
     localStorage.setItem("cities", JSON.stringify(cities));
-
-
-
-
     
-// //     {
-// //         name: timeLeft,
-// //         name: userInitials.value.toUpperCase()
-// //     };
-// //     highScores.push(score);
-// //     highScores.sort( (a,b) => b.score - a.score)
-// //     highScores.splice(5);
-
-// //     localStorage.setItem("highScores", JSON.stringify(highScores));
-// //     window.location.assign("./index.html");     // return to quiz start after submitting
-
 };
 
-function removeInvalidCity() {
-    localStorage.getItem("cities").pop();
+// Generate list of recently searched cities
+
+function populateList() {
+    var cities = JSON.parse(localStorage.getItem("cities")) || [];
+    var cities = cities.reverse();
+
+    $("#citySearchHistory").empty();
+    cities.forEach(function(city) {
+        $("#citySearchHistory").append(`<button type="button" class="btn btn-outline-secondary searchHistoryBtn">${city}</button>`)
+    })
 };
