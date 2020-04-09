@@ -185,5 +185,4 @@ function lastCityStored(city) {
     var cities = JSON.parse(localStorage.getItem('cities'));
     var city = cities.slice(-1).pop();
     $("#citySearchInput").val(city);
-    console.log(city)
 };
