@@ -67,7 +67,7 @@ function displayWeather() {
         }).then(function(response) {
 
             var weatherIcon = response.weather[0].icon;
-            var weatherURL = "http://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
+            var weatherURL = "https://openweathermap.org/img/wn/" + weatherIcon + "@2x.png";
 
             $("#cityName").text(response.name);
             $("#currentWeatherIcon").attr("src", weatherURL);
