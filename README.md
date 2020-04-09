@@ -7,7 +7,7 @@ Build an application that displays current and forecasted weather conditions, ba
 Incorporating multiple third-pary APIs, AJAX calls, and existing knowledge, build a simple weather dashboard. Allow users to search by city, display current and forecasted weather conditions, save recently searched cities to local storage, and offer that search history as interactive inputs.
 
 # Screenshots
-![Weather Dashboard](https://raw.githubusercontent.com/nabeek/UUBC-Weather-Dashboard/master/assets/Weather%20Dashboard%20Screenshot.png)
+![Weather Dashboard](https://raw.githubusercontent.com/nabeek/UUBC-Weather-Dashboard/master/assets/images/Weather%20Dashboard%20Screenshot.png)
 
 # Tech Used
 
