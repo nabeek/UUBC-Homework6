@@ -1,6 +1,8 @@
 // Generate recently searched cities on page load
 
 populateList();
+lastCityStored();
+citySearch();
 
 // Set dates throughout the page
 
@@ -172,3 +174,12 @@ function populateList() {
         $("#citySearchHistory").append(`<button type="button" class="btn btn-outline-secondary searchHistoryBtn">${city}</button>`)
     })
 };
+
+// Grab most recently searched city
+
+function lastCityStored(city) {
+    var cities = JSON.parse(localStorage.getItem('cities'));
+    var city = cities[5];
+    $("#citySearchInput").val(city);
+    console.log($("#citySearchInput").val())
+}
