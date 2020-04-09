@@ -72,7 +72,7 @@ function displayWeather() {
             var lat = response.coord.lat;
             var lon = response.coord.lon;
 
-            var uvURL = "http://api.openweathermap.org/data/2.5/uvi?appid=4679460f119c185a5abb3222455a221f&lat=" + lat + "&lon=" + lon;
+            var uvURL = "https://api.openweathermap.org/data/2.5/uvi?appid=4679460f119c185a5abb3222455a221f&lat=" + lat + "&lon=" + lon;
 
             $.ajax ({               // Get UV index for current day
                 url: uvURL,
@@ -127,7 +127,7 @@ function fiveDayForecast() {
    
         for (i = 0; i < response.length; i++) {
 
-            var weatherURL = "http://openweathermap.org/img/wn/" + (response[i].weather[0].icon).slice(0, -1) + "d@2x.png";
+            var weatherURL = "https://openweathermap.org/img/wn/" + (response[i].weather[0].icon).slice(0, -1) + "d@2x.png";
             $(`#iconPlus${i}`).attr("src", weatherURL);
             $(`#tempPlus${i}`).text(Math.round(response[i].main.temp) + " °F");
             $(`#humidityPlus${i}`).text(response[i].main.humidity + "%");

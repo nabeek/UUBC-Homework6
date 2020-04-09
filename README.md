@@ -20,10 +20,6 @@ JavaScript\
 [Moment.js](https://momentjs.com)\
 [OpenWeatherMap](https://openweathermap.org/)
 
-# Errors and Bugs
-
-v1 - Known "XMLHttpRequest cannot load due to access control checks" error in Safari; this error prevents the UV index from populating and being styled; use Chrome for full functionality
-
 # License
 
 MIT © [nabeek](https://github.com/nabeek)
