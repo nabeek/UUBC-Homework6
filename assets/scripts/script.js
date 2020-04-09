@@ -1,8 +1,12 @@
 // Generate recently searched cities on page load
 
 populateList();
-lastCityStored();
-citySearch();
+
+// Run most recently searched city (that was added to local storage)
+if (localStorage.getItem("cities") !== null) {
+    lastCityStored();
+    citySearch();
+};
 
 // Set dates throughout the page
 
@@ -13,7 +17,7 @@ $(document).ready(function() {
         var forecastDate = $(`#currentDatePlus${i}`);
         forecastDate.text(moment().add(`${i}`, "d").format("l"));
     };
-})
+});
 
 // Collect city input and call API
 
@@ -179,7 +183,7 @@ function populateList() {
 
 function lastCityStored(city) {
     var cities = JSON.parse(localStorage.getItem('cities'));
-    var city = cities[5];
+    var city = cities.slice(-1).pop();
     $("#citySearchInput").val(city);
-    console.log($("#citySearchInput").val())
-}
+    console.log(city)
+};
